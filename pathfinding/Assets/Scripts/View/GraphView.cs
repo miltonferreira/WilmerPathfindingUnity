@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Graph))]
 public class GraphView : MonoBehaviour
 {
+    //*** Instancia os nodes no grid <-----------------------
     public GameObject nodeViewPrefab;
     public Color baseColor = Color.white;
     public Color wallColor = Color.black;
@@ -19,7 +20,7 @@ public class GraphView : MonoBehaviour
             NodeView nodeView = instance.GetComponent<NodeView>();
 
             if(nodeView != null){
-                nodeView.Init(n);
+                nodeView.Init(n);   // posiciona o node no grid
 
                 if(n.nodeType == NodeType.Blocked){
                     nodeView.ColorNode(wallColor);

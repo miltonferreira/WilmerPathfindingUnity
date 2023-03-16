@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class DemoController : MonoBehaviour
 {
-    public MapData mapData;
+    //*** Inicia gerenciamento do grid de nodes na tela <-----------------------
+    public MapData mapData; // gerador da grid
     public Graph graph;
 
     void Start() {
         if(mapData != null && graph != null){
-            int[,] mapInstance = mapData.MakeMap();
-            graph.Init(mapInstance);
+            int[,] mapInstance = mapData.MakeMap(); // cria a grid/labirinto/maze
+            graph.Init(mapInstance);                // criação do grid
 
             GraphView graphView = graph.gameObject.GetComponent<GraphView>();
 

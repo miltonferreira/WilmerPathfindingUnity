@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour
 {
+    //*** Posiciona os node no grid e nodes pegam posições dos vizinhos <---------------------
+
     public Node[,] nodes;
     public List<Node> walls = new List<Node>(); // lista de parede/bloqueio caminho
 
@@ -23,21 +25,24 @@ public class Graph : MonoBehaviour
         new Vector2(-1f,1f)
     };
 
-    public void Init(int[,] mapData){
+    public void Init(int[,] mapData){   // posiciona os node e pega vizinhos
         m_mapData = mapData;
-        m_width = mapData.GetLength(0);
-        m_height = mapData.GetLength(1);
 
-        nodes = new Node[m_width, m_height];
+        m_width = mapData.GetLength(0);         // pega a largura
+        m_height = mapData.GetLength(1);        // pega a altura
 
-        //??????????????????
+        nodes = new Node[m_width, m_height];    // cria nova coluna/linha
+
+        // posiciona os nodes/quadrados em suas posições
         for(int y = 0; y < m_height; y++){
             for(int x = 0; x < m_width; x++){
                 NodeType type = (NodeType)mapData[x,y];
-                Node newNode = new Node(x,y,type);
-                nodes[x,y] = newNode;
+                
+                Node newNode = new Node(x,y,type);  // cria novo node
+                nodes[x,y] = newNode;               // atribui a linha/coluna
 
-                newNode.position = new Vector3(x,y,0);
+                // posiciona na grid o node
+                newNode.position = new Vector3((-4.5f+x),(-4.5f+y),0);
 
                 if(type == NodeType.Blocked){
                     walls.Add((newNode));
@@ -45,7 +50,7 @@ public class Graph : MonoBehaviour
             }
         }
 
-        //???????????
+        //Cada NODE pega referencias dos vizinhos
         for(int y = 0; y < m_height; y++){
             for(int x = 0; x < m_width; x++){
                 if(nodes[x,y].nodeType != NodeType.Blocked){
@@ -56,8 +61,8 @@ public class Graph : MonoBehaviour
 
     }
 
-    // limite de altura e largura mapData
-    public bool IsWithinBounds(int x, int y){
+    
+    public bool IsWithinBounds(int x, int y){   // limite de altura e largura mapData
         return (x >=0 && x < m_width && y>= 0 && y < m_height);
     }
 
