@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class MapData : MonoBehaviour
 {
-    //*** Cria a GRID do labirinto/maze e qual node é parede <---------------------
+    //*** Indica em que posição criar nodes (caminho ou parede) <---------------------
 
     // altura e largura do maze
     public int width = 10;
@@ -36,7 +36,6 @@ public class MapData : MonoBehaviour
         }
 
         if(textAsset == null){
-            
             textAsset = Resources.Load(resourcePath + "/" + levelName) as TextAsset;
         }
     }

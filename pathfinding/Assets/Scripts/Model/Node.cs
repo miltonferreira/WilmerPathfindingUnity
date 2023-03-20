@@ -18,7 +18,7 @@ public class Node
 
     public List<Node> neighbors = new List<Node>();
 
-    public Node previous = null;
+    public Node previous = null;    //  faz ligação com NODE anterior
 
     // Construtor da classe
     public Node(int xIndex, int yIndex, NodeType nodeType){

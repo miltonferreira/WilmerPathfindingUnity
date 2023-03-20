@@ -7,6 +7,7 @@ public class GraphView : MonoBehaviour
 {
     //*** Instancia os nodes no grid <-----------------------
     public GameObject nodeViewPrefab;
+    public NodeView[,] nodeViews;
     public Color baseColor = Color.white;
     public Color wallColor = Color.black;
 
@@ -15,12 +16,17 @@ public class GraphView : MonoBehaviour
             Debug.LogWarning("GRAPHVIEW No graph to initialize!");
         }
 
+        nodeViews = new NodeView[graph.Width, graph.Height];    // pega largura e altura do grid
+
         foreach(Node n in graph.nodes){
+
             GameObject instance = Instantiate(nodeViewPrefab, Vector3.zero, Quaternion.identity);
             NodeView nodeView = instance.GetComponent<NodeView>();
 
             if(nodeView != null){
                 nodeView.Init(n);   // posiciona o node no grid
+
+                nodeViews[n.xIndex, n.yIndex] = nodeView;
 
                 if(n.nodeType == NodeType.Blocked){
                     nodeView.ColorNode(wallColor);
@@ -30,4 +36,34 @@ public class GraphView : MonoBehaviour
             }
         }
     }
+
+    public void ColorNodes(List<Node> nodes, Color color){
+        foreach (Node n in nodes){
+            if(n != null){
+                NodeView nodeView = nodeViews[n.xIndex, n.yIndex];
+
+                if(nodeView != null){
+                    nodeView.ColorNode(color);
+                }
+            }
+        }
+    }
+
+    #region Ajusta direção do Arrow ao NODE anterior
+    public void ShowNodeArrows(Node node, Color color){
+        if(node != null){
+            NodeView nodeView = nodeViews[node.xIndex, node.yIndex];
+            if(nodeView != null){
+                nodeView.ShowArrow(color);
+            }
+        }
+    }
+
+    public void ShowNodeArrows(List<Node> nodes, Color color){
+        foreach(Node n in nodes){
+            ShowNodeArrows(n, color);
+        }
+    }
+
+    #endregion
 }
